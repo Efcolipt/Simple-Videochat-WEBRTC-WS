@@ -1,0 +1,34 @@
+header{
+	background:#0e0e0e;
+	padding: 20px 0px;
+	position: sticky;
+	top:0;
+}
+.top--header{
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.logo{
+	font-size: 30px;
+	color:#fff;
+}
+.personal > ul > li {
+			display: inline-block;
+}
+.personal > ul > li > a {
+	color:#fff;
+	margin-right: 15px;
+	border-radius: 5px;
+	border:0;
+	padding: 10px 25px;
+	transition: all.3s ease;
+	background: #f0a10f;
+}
+.personal > ul > li > a:hover{
+    background: #ffb62e;
+}
