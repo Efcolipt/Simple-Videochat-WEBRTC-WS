@@ -1,7 +1,7 @@
 <?php 
 
-	$host = "localhost";
-	$user = "root";
+	$host = "";
+	$user = "";
 	$pass = "";
 	$datatable_users = "ChatUsers";
 	$datatable_messages = "Messages";
