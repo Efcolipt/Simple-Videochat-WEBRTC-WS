@@ -113,7 +113,7 @@ function addVideoStream (video, stream) {
     micro.el.addEventListener('click', () => {
         micro.off = !micro.off
         video.muted = micro.off
-        micro.el.textContent = micro.off ? 'Вкл микро' : 'Выкл микро'
+        micro.el.textContent = micro.off ? 'Вкл микрофон' : 'Выкл микрофон'
     })
 
     videosContainer.append(video)
