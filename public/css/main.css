@@ -1,0 +1,227 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+* {
+	padding: 0;
+	margin: 0;
+	text-decoration: none;
+	list-style: none;
+	outline: 0;
+}
+
+.container {
+	padding-right: 15px;
+	padding-left: 15px;
+	margin: 0 auto;
+	max-width: 1175px;
+}
+
+body {
+	background: #212121;
+	transition: all.3s ease;
+	font-family: 'Montserrat', sans-serif;
+}
+
+h2 {
+	text-align: center;
+	margin-top: 25px;
+	font-size: 30px;
+	margin-bottom: 20px;
+	color: #fff;
+	font-family: 'Montserrat', sans-serif;
+}
+
+header {
+	background: #0e0e0e;
+	padding: 20px 0px;
+	position: sticky;
+	top: -1px;
+	z-index: 5;
+}
+
+.header-content {
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.header-brand {
+	font-size: 30px;
+	color: #fff;
+}
+
+.header-nav ul {
+	display: flex;
+	gap: 20px;
+	align-items: center;
+}
+
+.header-nav a {
+	color: #fff;
+	margin-right: 15px;
+	border-radius: 5px;
+	border: 0;
+	padding: 10px 25px;
+	transition: all.3s ease;
+	background: #f0a10f;
+}
+
+.header-nav a:hover {
+	background: #ffb62e;
+}
+
+.chat-content {
+	display: flex;
+	padding-bottom: 40px;
+	padding-top: 40px;
+}
+
+.videos {
+	max-width: 340px;
+}
+
+.videos video {
+	width: 100%;
+	height: 260px;
+	object-fit: cover;
+	border-radius: 5px;
+}
+
+.chat {
+	position: sticky;
+    top: 90px;
+    width: 100%;
+    padding-left: 15px;
+    align-self: flex-start;
+}
+
+.message-correspondence {
+	padding-right: 30px;
+	padding-left: 30px;
+	margin: 0 auto;
+	padding-top: 30px;
+	padding-bottom: 30px;
+	border-radius: 5px;
+	border: 1px solid #313131;
+	border-bottom: 0;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+	height: 400px;
+	overflow-y: scroll;
+}
+
+.message-correspondence__item {
+	position: relative;
+	align-items: center;
+	color: #d6d5d5;
+	margin-top: 25px;
+	margin-bottom: 25px;
+	padding: 20px;
+	border: 1px solid #292929;
+	border-radius: 5px;
+}
+
+
+.message-correspondence__img {
+	display: inline-block;
+	width: 35px;
+	height: 35px;
+}
+
+.message-correspondence__img img {
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+}
+
+.message-correspondence__name {
+	position: absolute;
+	top: 13px;
+	display: inline-block;
+	margin-left: 12px;
+	font-size: 18px;
+}
+
+.message-correspondence__date {
+	display: inline-block;
+	margin-left: 7px;
+}
+
+.message-correspondence__data {
+	padding-left: 2px;
+	white-space: pre-line;
+	font-size: 18px;
+	margin-top: 20px;
+}
+
+.message-form {
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+}
+
+.message-form__input {
+	padding: 15px;
+    background: inherit;
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+    color: #fff;
+    width: 100%;
+    border: 1px solid #313131;
+    border-bottom-left-radius: 5px;
+	outline: #434343;
+}
+
+.message-form__input:focus {
+    border: 1px solid #434343;
+}
+
+.message-form__btn {
+	background: #f0a10f;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    border: 1px solid #313131;
+    transition: all.3s ease;
+    cursor: pointer;
+    border-bottom-right-radius: 5px;
+    padding: 0 12px;
+}
+
+.message-form__btn:hover {
+	background: #ffb62e;
+}
+
+
+
+
+::-webkit-scrollbar {
+	transition: all.3s ease;
+	width: 4px;
+}
+
+::-webkit-scrollbar-track {
+	background-color: #23232366;
+}
+
+/* the new scrollbar will have a flat appearance with the set background color */
+
+::-webkit-scrollbar-thumb {
+	border-radius: 5px;
+	background-color: #313131;
+}
+
+/* this will style the thumb, ignoring the track */
+::-webkit-scrollbar-thumb:hover {
+	background: #6d6d6d;
+}
+
+::-webkit-scrollbar-corner {
+	border-radius: 5px;
+	background-color: rgba(3, 3, 3, .1);
+}

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+
+<head>
+	<title>Видеочат</title>
+	<meta charset="UTF-8">
+
+	<!-- Media -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+	<!-- Meta for search -->
+	<meta name="robots" content="index, follow">
+	<meta name="description" content="">
+	<meta name="author" content="Libils Team">
+	<meta name="copyright" lang="ru" content="Libils Team">
+
+	<!-- Open Graph Meta -->
+	<meta property="og:title" content="Видеочат">
+	<meta property="og:locale" content="ru_RU">
+	<meta property="og:description" content="Живой чат, где ты можешь провести свое свободное время!">
+	<meta property="og:image" content="">
+	<meta property="og:site_name" content="Chat">
+	<meta property="og:url" content="">
+	<meta property="og:type" content="website">
+
+
+	<!-- Css -->
+	<link rel="stylesheet" href="/css/media.css">
+	<link rel="stylesheet" href="/css/main.css">
+	<link rel="shortcut icon" href="/img/favicon/fav.ico" type="image/x-icon">
+
+	<script>
+        const ROOM_ID = "<%= roomId %>"
+    </script>
+    <script src="https://unpkg.com/peerjs@1.3.2/dist/peerjs.min.js" defer></script>
+    <script src="/socket.io/socket.io.js" defer></script>
+    <script src="/room.js" defer></script>
+
+	<!-- Font awesome -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+		integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+</head>
+
+<body>
+
+
+	<div class="wrapper">
+		<header>
+			<div class="container header-content">
+				<a class="header-brand">Libils Team</a>
+				<div class="header-nav">
+					<ul>
+						<li><a href="/personal">Личный кабинет</a></li>
+						<li><a href="/room">Общение</a></li>
+						<li><a href="/logout">Выход</a></li>
+					</ul>
+				</div>
+			</div>
+		</header>
+		<div class="container chat-content">
+			<div class="videos">
+				<div id="videos-container"></div>
+				<button id="video-micro">Выкл</button>
+			</div>
+			
+			<div class="chat">
+				<div id="chat-message-area" class="message-correspondence"></div>
+				<div class="message-form">
+					<input id="chat-message-input" type="text" placeholder="Введите ваше сообщение" class="message-form__input" required>
+					<button id="chat-message-btn" class="message-form__btn">Отправить</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
