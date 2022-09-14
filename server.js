@@ -13,7 +13,6 @@ app.get('/', (req, res) => {
 })
 
 app.get('/room/:room', (req, res) => {
-    console.log(req.params)
     res.render('room', { roomId: req.params.room })
 })
 
