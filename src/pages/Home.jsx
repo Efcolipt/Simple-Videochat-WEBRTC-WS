@@ -9,10 +9,10 @@ const Home = () => {
 
   return (
     <div className='meeting'>
-        <div className="container">
-            <Sidebar />
-            {chat.chatId !== 'null' && <Chat />}
-        </div>
+      <div className="container">
+        <Sidebar />
+        {chat.chatId !== 'null' && <Chat />}
+      </div>
     </div>
   )
 }

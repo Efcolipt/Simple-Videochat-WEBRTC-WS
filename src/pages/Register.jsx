@@ -4,7 +4,7 @@ import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
 import { doc, setDoc } from 'firebase/firestore'
 import { auth, db, storage } from "../firebase"
 import { v4 as uuidV4 } from 'uuid'
-import { useNavigate, Link} from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 
 const Register = () => {
     const [err, setErr] = useState('')
@@ -23,30 +23,28 @@ const Register = () => {
         try {
             const res = await createUserWithEmailAndPassword(auth, payload.email, payload.password)
             const storageRef = ref(storage, uuidV4())
-            
+
             await uploadBytesResumable(storageRef, payload.file).then(() => {
-                getDownloadURL(storageRef).then( async (downloadURL) => {
+                getDownloadURL(storageRef).then(async (downloadURL) => {
                     try {
-                        //Update profile
                         await updateProfile(res.user, {
-                          displayName: payload.displayName,
-                          photoURL: downloadURL,
+                            displayName: payload.displayName,
+                            photoURL: downloadURL,
                         });
-                        //create user on firestore
+
                         await setDoc(doc(db, "users", res.user.uid), {
-                          uid: res.user.uid,
-                          displayName: payload.displayName,
-                          email: payload.email,
-                          photoURL: downloadURL,
+                            uid: res.user.uid,
+                            displayName: payload.displayName,
+                            email: payload.email,
+                            photoURL: downloadURL,
                         });
-            
-                        //create empty user chats on firestore
+
                         await setDoc(doc(db, "userChats", res.user.uid), {});
                         navigate("/");
-                      } catch (err) {
+                    } catch (err) {
                         console.log(err);
                         setErr(true);
-                      }
+                    }
                 })
             })
 
@@ -62,8 +60,8 @@ const Register = () => {
                 <span className='form-title'>Регистрация</span>
                 <form onSubmit={handleSubmit}>
                     <input type="text" placeholder='Введите имя' required />
-                    <input type="email" placeholder='Введите Email'  required/>
-                    <input type="password" placeholder='Введите пароль'  required/>
+                    <input type="email" placeholder='Введите Email' required />
+                    <input type="password" placeholder='Введите пароль' required />
                     <label htmlFor="file">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                             <g id="🔍-Product-Icons" stroke="none" strokeWidth="1" fillRule="evenodd">
@@ -74,7 +72,7 @@ const Register = () => {
                         </svg>
                         <span>Добавить аватарку</span>
                     </label>
-                    <input type="file" id='file' style={{ display: 'none' }}  required/>
+                    <input type="file" id='file' style={{ display: 'none' }} required />
                     <button>Зарегистрироваться</button>
                     {err.length > 0 && <span className='form-error'>{err}</span>}
                 </form>

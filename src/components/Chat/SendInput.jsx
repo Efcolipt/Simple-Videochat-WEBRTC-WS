@@ -10,24 +10,24 @@ import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 const SendInput = () => {
     const [text, setText] = useState('')
     const [file, setFile] = useState('')
-    
-  const { currentUser } = useContext(AuthContext)
-  const { chat } = useContext(ChatContext)
 
-  const handleEnter = async (e) => {
-    e.code === "Enter" && await handleSend()
-  }
-    
-  const handleSend = async () => {
+    const { currentUser } = useContext(AuthContext)
+    const { chat } = useContext(ChatContext)
 
-    if(text.trim().length < 1) return
+    const handleEnter = async (e) => {
+        e.code === "Enter" && await handleSend()
+    }
 
-    try{
-        if(file) {
-            const storageRef = ref(storage, uuidV4())
-            const uploadTask = uploadBytesResumable(storageRef, file)
-    
-                uploadTask.on((err) => {
+    const handleSend = async () => {
+
+        if (text.trim().length < 1) return
+
+        try {
+            if (file) {
+                const storageRef = ref(storage, uuidV4())
+                const uploadTask = uploadBytesResumable(storageRef, file)
+
+                uploadTask.on(() => {
                     // setErr(true)
                 }, () => {
                     getDownloadURL(uploadTask.snapshot.ref).then(async (downloadUrl) => {
@@ -42,43 +42,43 @@ const SendInput = () => {
                         })
                     })
                 })
-    
-        } else {
-            await updateDoc(doc(db, "chats", chat.chatId), {
-                messages: arrayUnion({
-                    id: uuidV4(),
-                    text,
-                    senderId: currentUser.uid,
-                    date: Timestamp.now()
+
+            } else {
+                await updateDoc(doc(db, "chats", chat.chatId), {
+                    messages: arrayUnion({
+                        id: uuidV4(),
+                        text,
+                        senderId: currentUser.uid,
+                        date: Timestamp.now()
+                    })
                 })
+            }
+
+            await updateDoc(doc(db, "userChats", currentUser.uid), {
+                [chat.chatId + ".lastMessage"]: {
+                    text,
+                },
+                [chat.chatId + ".date"]: serverTimestamp()
             })
+
+            await updateDoc(doc(db, "userChats", chat.user.uid), {
+                [chat.chatId + ".lastMessage"]: {
+                    text,
+                },
+                [chat.chatId + ".date"]: serverTimestamp()
+            })
+
+        } catch (e) {
+            console.log(e)
         }
-    
-        await updateDoc(doc(db, "userChats", currentUser.uid), {
-            [chat.chatId + ".lastMessage"]: {
-                text,
-            },
-            [chat.chatId + ".date"]: serverTimestamp()
-        })
-    
-        await updateDoc(doc(db, "userChats", chat.user.uid), {
-            [chat.chatId + ".lastMessage"]: {
-                text,
-            },
-            [chat.chatId + ".date"]: serverTimestamp()
-        })
 
-    } catch (e) {
-        console.log(e)
+
+        setText('')
+        setFile('')
     }
-
-
-    setText('')
-    setFile('')
-  }
     return (
         <div className='meeting-chat__input'>
-            <input type="text" placeholder='Напишите что нибудь' onKeyDown={handleEnter} value={text} onChange={e => setText(e.target.value)}/>
+            <input type="text" placeholder='Напишите что нибудь' onKeyDown={handleEnter} value={text} onChange={e => setText(e.target.value)} />
             <div className="meeting-chat__input-actions">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                     <g id="🔍-Product-Icons" stroke="none" strokeWidth="1" fillRule="evenodd">
@@ -87,7 +87,7 @@ const SendInput = () => {
                         </g>
                     </g>
                 </svg>
-                <input type="file" id="file" style={{ display: 'none' }} value={file} onChange={e => setFile(e.target.files[0])}/>
+                <input type="file" id="file" style={{ display: 'none' }} value={file} onChange={e => setFile(e.target.files[0])} />
                 <label htmlFor="file">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 36 36" version="1.1" preserveAspectRatio="xMidYMid meet">
 

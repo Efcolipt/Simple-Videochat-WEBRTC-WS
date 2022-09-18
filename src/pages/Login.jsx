@@ -28,8 +28,8 @@ const Login = () => {
                 <span className='form-logo'>LT Meeting</span>
                 <span className='form-title'>Авторизоваться</span>
                 <form onSubmit={handleSubmit}>
-                    <input type="email" placeholder='Введите Email' required/>
-                    <input type="password" placeholder='Введите пароль'  required/>
+                    <input type="email" placeholder='Введите Email' required />
+                    <input type="password" placeholder='Введите пароль' required />
                     <button >Войти</button>
                     {err.length > 0 && <span className='form-error'>{err}</span>}
                 </form>
