@@ -2,7 +2,7 @@ import { doc, onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import { db } from "../../firebase";
+import { frs } from "../../firebase";
 import Navbar from "./Navbar";
 import SearchBar from "./SearchBar";
 import Chats from "./Chats";
@@ -15,7 +15,7 @@ const Sidebar = () => {
 
   useEffect(() => {
     const getChats = () => {
-      const unsub = onSnapshot(doc(db, "userChats", currentUser.uid), (doc) => {
+      const unsub = onSnapshot(doc(frs, "userChats", currentUser.uid), (doc) => {
         setChats(doc.data());
       });
 

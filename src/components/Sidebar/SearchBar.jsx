@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { db } from '../../firebase'
+import { frs } from '../../firebase'
 import { collection, query, where, getDoc, getDocs } from "firebase/firestore"
 import ChatItem from './ChatItem'
 import { AuthContext } from '../../context/AuthContext'
@@ -16,7 +16,7 @@ const SearchBar = () => {
   const handleSearch = async () => {
     try {
       const q = query(
-        collection(db, "users"),
+        collection(frs, "users"),
         where("email", "==", email)
       )
 
@@ -41,25 +41,25 @@ const SearchBar = () => {
   const handleSelect = async () => {
     const combinedId = combineIds(currentUser.uid, user.uid)
     try {
-      const res = await getDoc(doc(db, "chats", combinedId))
+      const res = await getDoc(doc(frs, "chats", combinedId))
 
       if (!res.exists()) {
-        await setDoc(doc(db, "chats", combinedId), { messages: [] })
+        await setDoc(doc(frs, "chats", combinedId), { messages: [] })
 
-        await updateDoc(doc(db, "userChats", currentUser.uid), {
+        await updateDoc(doc(frs, "userChats", currentUser.uid), {
           [combinedId + ".info"]: {
             uid: user.uid,
             displayName: user.displayName,
-            photoURL: user.photoURL
+            photoURL: user.photoURL,
           },
           [combinedId + ".date"]: serverTimestamp()
         })
 
-        await updateDoc(doc(db, "userChats", user.uid), {
+        await updateDoc(doc(frs, "userChats", user.uid), {
           [combinedId + ".info"]: {
             uid: currentUser.uid,
             displayName: currentUser.displayName,
-            photoURL: currentUser.photoURL
+            photoURL: currentUser.photoURL,
           },
           [combinedId + ".date"]: serverTimestamp()
         })

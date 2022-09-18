@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
 import { useNavigate, Link } from "react-router-dom"
 import { signInWithEmailAndPassword } from "firebase/auth"
-import { auth } from '../firebase'
+import { auth, frs } from '../firebase'
+import { doc, Timestamp, updateDoc } from 'firebase/firestore'
+import LoaderData from '../components/LoaderData'
 
 const Login = () => {
     const [err, setErr] = useState('')
+    const [loader, setLoader] = useState(false)
+
     const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
@@ -16,10 +20,17 @@ const Login = () => {
         }
 
         try {
-            await signInWithEmailAndPassword(auth, payload.email, payload.password)
+            setLoader(true)
+            const { user } = await signInWithEmailAndPassword(auth, payload.email, payload.password)
+            await updateDoc(doc(frs, "users", user.uid), {
+                isOnline: true,
+                lastConnected: Timestamp.now(),
+            })
             navigate('/')
         } catch (e) {
             setErr(e.message)
+        } finally {
+            setLoader(false)
         }
     }
     return (
@@ -30,7 +41,7 @@ const Login = () => {
                 <form onSubmit={handleSubmit}>
                     <input type="email" placeholder='Введите Email' required />
                     <input type="password" placeholder='Введите пароль' required />
-                    <button >Войти</button>
+                    <button>Войти{loader && <LoaderData />}</button>
                     {err.length > 0 && <span className='form-error'>{err}</span>}
                 </form>
                 <p>Нет аккаунта ? <Link to="/register">Зарегистрироваться</Link></p>

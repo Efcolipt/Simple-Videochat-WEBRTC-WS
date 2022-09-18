@@ -2,6 +2,7 @@ import React from 'react';
 import ChatItem from './ChatItem';
 
 function Chats({ chats = [], handleSelect = () => { } }) {
+
   return (
     <div className="meeting-sidebar__chatlist">
       {Object.entries(chats)

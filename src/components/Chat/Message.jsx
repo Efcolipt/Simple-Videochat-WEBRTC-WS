@@ -26,7 +26,7 @@ const Message = ({ message }) => {
         <span></span>
       </div>
       <div className="meeting-chat__message-content">
-        <p>{message.text}</p>
+        {message.text && <p>{message.text}</p>}
         {message.img && <img src={message.img} alt="" />}
       </div>
     </div>

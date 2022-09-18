@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
-import { doc, setDoc } from 'firebase/firestore'
-import { auth, db, storage } from "../firebase"
+import { doc, setDoc, Timestamp } from 'firebase/firestore'
+import { auth, frs, storage } from "../firebase"
 import { v4 as uuidV4 } from 'uuid'
 import { useNavigate, Link } from "react-router-dom"
+import LoaderData from '../components/LoaderData'
 
 const Register = () => {
     const [err, setErr] = useState('')
+    const [loader, setLoader] = useState(false)
     const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
@@ -21,6 +23,7 @@ const Register = () => {
         }
 
         try {
+            setLoader(true)
             const res = await createUserWithEmailAndPassword(auth, payload.email, payload.password)
             const storageRef = ref(storage, uuidV4())
 
@@ -32,14 +35,16 @@ const Register = () => {
                             photoURL: downloadURL,
                         });
 
-                        await setDoc(doc(db, "users", res.user.uid), {
+                        await setDoc(doc(frs, "users", res.user.uid), {
                             uid: res.user.uid,
                             displayName: payload.displayName,
                             email: payload.email,
                             photoURL: downloadURL,
+                            isOnline: true,
+                            lastConnected: Timestamp.now(),
                         });
 
-                        await setDoc(doc(db, "userChats", res.user.uid), {});
+                        await setDoc(doc(frs, "userChats", res.user.uid), {});
                         navigate("/");
                     } catch (err) {
                         console.log(err);
@@ -50,6 +55,8 @@ const Register = () => {
 
         } catch (e) {
             setErr(e.message)
+        } finally {
+            setLoader(false)
         }
     }
 
@@ -73,7 +80,10 @@ const Register = () => {
                         <span>Добавить аватарку</span>
                     </label>
                     <input type="file" id='file' style={{ display: 'none' }} required />
-                    <button>Зарегистрироваться</button>
+                    <button>
+                        Зарегистрироваться
+                        {loader && <LoaderData />}
+                    </button>
                     {err.length > 0 && <span className='form-error'>{err}</span>}
                 </form>
                 <p>Уже есть аккаунт ? <Link to="/login">Login</Link></p>

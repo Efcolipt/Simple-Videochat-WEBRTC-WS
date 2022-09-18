@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { useContext } from "react";
 import { ChatContext } from "../../context/ChatContext";
-import { db } from "../../firebase";
+import { frs } from "../../firebase";
 import Message from "./Message";
 
 const Messages = () => {
@@ -11,7 +11,7 @@ const Messages = () => {
   const { chat } = useContext(ChatContext);
 
   useEffect(() => {
-    const unsub = onSnapshot(doc(db, "chats", chat.chatId), (doc) => {
+    const unsub = onSnapshot(doc(frs, "chats", chat.chatId), (doc) => {
       doc.exists() && setMessages(doc.data().messages);
     });
 

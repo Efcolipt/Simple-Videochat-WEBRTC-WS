@@ -1,15 +1,39 @@
 import React from "react";
+import { useEffect } from "react";
+import { useState } from "react";
 import { useContext } from "react";
 import { ChatContext } from "../../context/ChatContext";
-import useTheme from "../../hooks/useTheme";
+import setTheme from "../../utils/setTheme";
+import { collection, query, where,  getDocs } from "firebase/firestore"
+import { frs } from "../../firebase";
 
 const ChatNavbar = () => {
-    const [, setTheme] = useTheme();
     const { chat } = useContext(ChatContext);
+    const [user, setUser] = useState({})
+    useEffect( () => {
+        console.log(chat.user.uid)
+        if(!chat.user?.uid) return
+
+        const q = query(
+            collection(frs, "users"),
+            where("uid", "==", chat.user.uid)
+          )
+    
+    
+          getDocs(q).then((snap) => {
+            snap.forEach(doc => {
+                setUser(doc.data())
+              });
+
+          })
+          console.log(user)
+
+    }, [chat.user])
 
     return (
         <div className="meeting-chat__navbar">
             <span>{chat.user?.displayName}</span>
+            <span>{user.isOnline ? 'online' : 'offline'}</span>
             <div className="meeting-chat__navbar-icons">
                 <svg
                     className="dark-theme"
